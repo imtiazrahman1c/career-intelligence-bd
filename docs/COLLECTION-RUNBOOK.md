@@ -37,3 +37,11 @@ Availability is not rechecked by the current display-metadata collector. Banglad
     python -m collectors.refresh_snapshot --include-listings --check-availability --output /tmp/career-snapshot.json
 
 Uses one bounded Jobicy batch-status request. Closed records are removed. Active means active at collection time, not guaranteed active when a user clicks. Missing, duplicate, malformed or failed status results remain unknown. Himalayas uses at most 20 individual API checks, with four requests in flight and no retries; HTTP 410 means closed, other failures remain unknown. No database publication occurs automatically. Dashboard labels distinguish active-at-collection from unknown; neither guarantees availability when applying.
+
+## Server-side publication setup
+
+Workflow: `.github/workflows/publish-data.yml`, manual runs on main only. No schedule is enabled. It runs offline tests, collects and validates current listings, then inserts and verifies a published snapshot. Duplicate timestamps are ignored; old snapshots are never overwritten. The publisher uses an explicit field projection to exclude unexpected provider content and is pinned to the career project URL.
+
+One repository Actions secret is required: `CAREER_SUPABASE_SECRET_KEY`, containing a backend `sb_secret_...` key from the career-intelligence-bd Supabase project. This key bypasses RLS: keep it only in repository Actions secrets, never in source, browser configuration, chat or logs. The GitHub connector available in this session cannot configure repository secrets or dispatch a workflow. An account owner must set the secret through GitHub Settings > Secrets and variables > Actions, then run Collect and publish career snapshot from Actions on main. Verify that run before adding a daily schedule. No additional frontend credential is required.
+
+Publication is tested with mocked HTTP responses; live publisher execution requires that secret. Existing connector-based manual database publication has been verified separately and does not verify the new workflow.

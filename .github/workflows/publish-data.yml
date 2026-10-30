@@ -1,0 +1,31 @@
+name: Collect and publish career snapshot
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: career-data-publication
+  cancel-in-progress: false
+jobs:
+  publish:
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - name: Fetch main event commit
+        env:
+          REPOSITORY: ${{ github.repository }}
+          REVISION: ${{ github.sha }}
+        run: |
+          git init .
+          git remote add origin "https://github.com/${REPOSITORY}.git"
+          git fetch --depth=1 origin "$REVISION"
+          git checkout --detach FETCH_HEAD
+      - name: Run offline checks
+        run: bash tests/run_checks.sh
+      - name: Collect validated current sample
+        run: python3 -m collectors.refresh_snapshot --include-listings --check-availability --output "$RUNNER_TEMP/career-snapshot.json"
+      - name: Publish and verify
+        env:
+          CAREER_SUPABASE_SECRET_KEY: ${{ secrets.CAREER_SUPABASE_SECRET_KEY }}
+        run: python3 -m collectors.publish_snapshot --input "$RUNNER_TEMP/career-snapshot.json"
