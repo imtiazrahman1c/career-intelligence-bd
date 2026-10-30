@@ -1,15 +1,15 @@
-# Dashboard scaffold
+# Dashboard development preview
 
-From the repository root:
+Run from the repository root:
 
     python -m http.server 8000 --directory web
 
-Open http://localhost:8000 in a browser. This buildless milestone uses a saved aggregate probe snapshot, not a live search or database connection. The source selector changes sample totals and field-completeness panels. Snapshot reload reads the saved file; it does not poll upstream providers. Six navigation views have explicit preparation/empty states where features are not implemented.
+The buildless dashboard reads the latest published aggregate snapshot from Supabase through read-only public access. Reload re-reads the database; it does not fetch upstream jobs. Never put secret/service-role keys in web/config.mjs.
+
+Staging deployment is READY. See docs/DEPLOYMENT-CHECKPOINT.md for verification and limits. Job search, extraction, automated collection and market trends are not implemented.
 
 Checks:
 
-    node --check web/app.js
     node tests/test_dashboard.mjs
+    node tests/test_snapshot_client.mjs
     python -m unittest discover -s tests -v
-
-Not yet verified in a browser. Not deployed. Database schema, ingestion schedule, job search, skill counts and trend engine are pending.
