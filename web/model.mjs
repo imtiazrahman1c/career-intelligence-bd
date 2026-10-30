@@ -6,7 +6,12 @@ export function totals(results){
  const good=results.filter(r=>r.http_status===200&&!r.error_type);
  return {records:good.reduce((n,r)=>n+r.sample_records,0),sources:good.length,descriptions:good.reduce((n,r)=>n+r.nonempty_field_counts.description,0),duplicateIds:good.reduce((n,r)=>n+r.duplicate_ids,0)};
 }
-export function evidenceRows(results){return ['title','company','description','application','published','countries'].map(field=>({field,count:results.reduce((n,r)=>n+(r.nonempty_field_counts?.[field]||0),0)}));}
+export function evidenceRows(results){const good=results.filter(r=>r.http_status===200&&!r.error_type);return ['title','company','description','application','published','countries'].map(field=>({field,count:good.reduce((n,r)=>n+(r.nonempty_field_counts?.[field]||0),0)}));}
+export function snapshotHealth(snapshot,now=Date.now()){
+ const timestamp=Date.parse(snapshot?.checked_at),age=now-timestamp;
+ if(!Number.isFinite(timestamp)||age < -300000)return {state:'invalid',ageHours:null};
+ return {state:age>86400000?'stale':'recent',ageHours:Math.max(0,Math.floor(age/3600000))};
+}
 export const skillLabels={sql:'SQL',python:'Python',spreadsheets:'Spreadsheets',power_bi:'Power BI',tableau:'Tableau',seo:'SEO',google_ads:'Google Ads',meta_ads:'Meta Ads',ga4:'GA4',copywriting:'Copywriting',photoshop:'Photoshop',illustrator:'Adobe Illustrator',figma:'Figma',typography:'Typography'};
 export const careerSkills={data_analyst:['sql','python','spreadsheets','power_bi','tableau'],digital_marketer:['seo','google_ads','meta_ads','ga4','copywriting'],graphic_designer:['photoshop','illustrator','figma','typography']};
 export function skillsForCareer(analysis,career='all'){

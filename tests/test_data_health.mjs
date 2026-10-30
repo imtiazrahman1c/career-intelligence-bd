@@ -1,0 +1,10 @@
+import assert from 'node:assert/strict';
+import {snapshotHealth,evidenceRows} from '../web/model.mjs';
+const now=Date.parse('2026-10-30T12:00:00Z');
+assert.equal(snapshotHealth({checked_at:'2026-10-29T11:59:59Z'},now).state,'stale');
+assert.equal(snapshotHealth({checked_at:'2026-10-29T12:00:00Z'},now).state,'recent');
+assert.equal(snapshotHealth({checked_at:'2026-10-30T13:00:00Z'},now).state,'invalid');
+assert.equal(snapshotHealth({checked_at:'bad'},now).state,'invalid');
+assert.equal(snapshotHealth({checked_at:'2026-10-30T12:01:00Z'},now).ageHours,0);
+assert.equal(evidenceRows([{http_status:500,nonempty_field_counts:{title:99}},{http_status:200,nonempty_field_counts:{title:2}}])[0].count,2);
+console.log('PASS freshness boundary, future/invalid timestamps and failed-source exclusion');
