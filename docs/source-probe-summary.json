@@ -1,0 +1,92 @@
+{
+  "checked_at": "2026-10-30T10:00:49.544485+00:00",
+  "results": [
+    {
+      "source": "himalayas",
+      "sample_records": 20,
+      "unique_source_ids": 20,
+      "duplicate_ids": 0,
+      "fields_present_in_sample": [
+        "applicationLink",
+        "categories",
+        "companyLogo",
+        "companyName",
+        "companySlug",
+        "currency",
+        "description",
+        "employmentType",
+        "excerpt",
+        "expiryDate",
+        "guid",
+        "locationRestrictions",
+        "maxSalary",
+        "minSalary",
+        "parentCategories",
+        "pubDate",
+        "salaryPeriod",
+        "seniority",
+        "timezoneRestrictions",
+        "title"
+      ],
+      "nonempty_field_counts": {
+        "id": 20,
+        "title": 20,
+        "company": 20,
+        "description": 20,
+        "application": 20,
+        "published": 20,
+        "countries": 20
+      },
+      "has_next_cursor": true,
+      "reported_total_not_collected": 131003,
+      "limitations": [
+        "First page only; not a representative sample",
+        "Eligibility and skill extraction not validated",
+        "Historical retention rights not established by this probe"
+      ],
+      "http_status": 200
+    },
+    {
+      "source": "jobicy",
+      "sample_records": 20,
+      "unique_source_ids": 20,
+      "duplicate_ids": 0,
+      "fields_present_in_sample": [
+        "companyLogo",
+        "companyName",
+        "id",
+        "jobDescription",
+        "jobExcerpt",
+        "jobGeo",
+        "jobIndustry",
+        "jobLevel",
+        "jobSlug",
+        "jobTitle",
+        "jobType",
+        "pubDate",
+        "salaryCurrency",
+        "salaryMax",
+        "salaryMin",
+        "salaryPeriod",
+        "url"
+      ],
+      "nonempty_field_counts": {
+        "id": 20,
+        "title": 20,
+        "company": 20,
+        "description": 20,
+        "application": 20,
+        "published": 20,
+        "countries": 20
+      },
+      "has_next_cursor": true,
+      "reported_total_not_collected": null,
+      "limitations": [
+        "First page only; not a representative sample",
+        "Eligibility and skill extraction not validated",
+        "Historical retention rights not established by this probe"
+      ],
+      "http_status": 200
+    }
+  ]
+}
