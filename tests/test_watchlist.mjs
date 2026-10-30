@@ -1,0 +1,12 @@
+import assert from 'node:assert/strict';
+import {cleanWatchlist,readWatchlist,writeWatchlist,toggleCareer} from '../web/watchlist.mjs';
+assert.deepEqual(cleanWatchlist(['data_analyst','data_analyst','<script>',null]),['data_analyst']);
+assert.deepEqual(toggleCareer(['data_analyst'],'data_analyst'),[]);
+assert.deepEqual(toggleCareer([],'digital_marketer'),['digital_marketer']);
+assert.deepEqual(readWatchlist({getItem:()=>'{bad json'}),[]);
+assert.equal(writeWatchlist({setItem:()=>{throw Error('blocked');}},['data_analyst']),false);
+let value;
+const storage={setItem:(k,v)=>value=v,getItem:()=>value};
+assert.equal(writeWatchlist(storage,['graphic_designer']),true);
+assert.deepEqual(readWatchlist(storage),['graphic_designer']);
+console.log('PASS watchlist persistence, corrupt storage, blocked storage and duplicate removal');
