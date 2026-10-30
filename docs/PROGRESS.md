@@ -11,12 +11,12 @@ Checkpoint: 2026-10-30. This file records verified completion, not planned work 
 - [x] 07 GitHub repository verified; initial documentation committed
 - [x] 08 Initial limited MVP scope documented; university-specific requirements pending
 - [ ] 09 Live source sample and permission feasibility — PARTIAL: both 20-record probes passed; indefinite retention unresolved
-- [ ] 10 Runnable application scaffold
-- [ ] 11 Database schema and access controls
+- [ ] 10 Runnable application scaffold — PARTIAL: buildless dashboard code and model tests ready; browser QA and deployment pending
+- [ ] 11 Database schema and access controls — design draft in docs/DATABASE-DESIGN.md; no migration applied
 - [ ] 12 Collection, validation and deduplication
 - [ ] 13 Skill/role normalization
 - [ ] 14 Analytics and signal evidence
-- [ ] 15 Clarity-inspired dashboard implementation
+- [ ] 15 Clarity-inspired dashboard implementation — PARTIAL: light card-grid shell, source filters and six views; browser review pending
 - [ ] 16 Five modules and functional filters
 - [ ] 17 Scheduled collection, logs and failure handling
 - [ ] 18 Data, integration and security verification

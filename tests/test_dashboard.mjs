@@ -1,0 +1,12 @@
+import assert from 'node:assert/strict';
+import {readFile} from 'node:fs/promises';
+import {selectResults,totals,evidenceRows} from '../web/model.mjs';
+const snapshot=JSON.parse(await readFile(new URL('../web/data/source-probe-summary.json',import.meta.url)));
+assert.equal(totals(selectResults(snapshot)).records,40);
+assert.equal(totals(selectResults(snapshot,'himalayas')).records,20);
+assert.equal(totals(selectResults(snapshot,'jobicy')).sources,1);
+assert.equal(totals(selectResults(snapshot,'unknown')).records,0);
+assert.equal(evidenceRows(selectResults(snapshot,'himalayas')).find(r=>r.field==='description').count,20);
+assert.throws(()=>selectResults({}));
+assert.equal(totals([{http_status:500,sample_records:100}]).records,0);
+console.log('PASS: combined, source filter, no-match, field counts, invalid snapshot and failed-source exclusion');
