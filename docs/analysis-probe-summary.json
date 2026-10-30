@@ -1,0 +1,151 @@
+{
+  "checked_at": "2026-10-30T11:11:30.843003+00:00",
+  "results": [
+    {
+      "source": "himalayas",
+      "sample_records": 20,
+      "unique_source_ids": 20,
+      "duplicate_ids": 0,
+      "fields_present_in_sample": [
+        "applicationLink",
+        "categories",
+        "companyLogo",
+        "companyName",
+        "companySlug",
+        "currency",
+        "description",
+        "employmentType",
+        "excerpt",
+        "expiryDate",
+        "guid",
+        "locationRestrictions",
+        "maxSalary",
+        "minSalary",
+        "parentCategories",
+        "pubDate",
+        "salaryPeriod",
+        "seniority",
+        "timezoneRestrictions",
+        "title"
+      ],
+      "nonempty_field_counts": {
+        "id": 20,
+        "title": 20,
+        "company": 20,
+        "description": 20,
+        "application": 20,
+        "published": 20,
+        "countries": 20
+      },
+      "has_next_cursor": true,
+      "reported_total_not_collected": 131003,
+      "limitations": [
+        "First page only; not a representative sample",
+        "Eligibility and skill extraction not validated",
+        "Historical retention rights not established by this probe"
+      ],
+      "analysis": {
+        "method_version": "editorial-mentions-v1",
+        "unique_records_analyzed": 20,
+        "skill_mention_counts": {
+          "sql": 2,
+          "python": 3,
+          "spreadsheets": 0,
+          "power_bi": 0,
+          "tableau": 0,
+          "seo": 1,
+          "google_ads": 1,
+          "meta_ads": 1,
+          "ga4": 0,
+          "copywriting": 0,
+          "photoshop": 0,
+          "illustrator": 0,
+          "figma": 1,
+          "typography": 1
+        },
+        "location_signal_counts": {
+          "unknown": 20
+        },
+        "limitations": [
+          "Mentions include optional and negative statements; not requirements",
+          "Editorial vocabulary; not an official occupational taxonomy",
+          "Location signals are not verified application eligibility",
+          "No cross-source deduplication; not market demand"
+        ]
+      },
+      "http_status": 200
+    },
+    {
+      "source": "jobicy",
+      "sample_records": 20,
+      "unique_source_ids": 20,
+      "duplicate_ids": 0,
+      "fields_present_in_sample": [
+        "companyLogo",
+        "companyName",
+        "id",
+        "jobDescription",
+        "jobExcerpt",
+        "jobGeo",
+        "jobIndustry",
+        "jobLevel",
+        "jobSlug",
+        "jobTitle",
+        "jobType",
+        "pubDate",
+        "salaryCurrency",
+        "salaryMax",
+        "salaryMin",
+        "salaryPeriod",
+        "url"
+      ],
+      "nonempty_field_counts": {
+        "id": 20,
+        "title": 20,
+        "company": 20,
+        "description": 20,
+        "application": 20,
+        "published": 20,
+        "countries": 20
+      },
+      "has_next_cursor": true,
+      "reported_total_not_collected": null,
+      "limitations": [
+        "First page only; not a representative sample",
+        "Eligibility and skill extraction not validated",
+        "Historical retention rights not established by this probe"
+      ],
+      "analysis": {
+        "method_version": "editorial-mentions-v1",
+        "unique_records_analyzed": 20,
+        "skill_mention_counts": {
+          "sql": 1,
+          "python": 3,
+          "spreadsheets": 1,
+          "power_bi": 0,
+          "tableau": 0,
+          "seo": 0,
+          "google_ads": 0,
+          "meta_ads": 0,
+          "ga4": 0,
+          "copywriting": 0,
+          "photoshop": 0,
+          "illustrator": 0,
+          "figma": 0,
+          "typography": 1
+        },
+        "location_signal_counts": {
+          "unknown": 19,
+          "worldwide_listed_review_required": 1
+        },
+        "limitations": [
+          "Mentions include optional and negative statements; not requirements",
+          "Editorial vocabulary; not an official occupational taxonomy",
+          "Location signals are not verified application eligibility",
+          "No cross-source deduplication; not market demand"
+        ]
+      },
+      "http_status": 200
+    }
+  ]
+}

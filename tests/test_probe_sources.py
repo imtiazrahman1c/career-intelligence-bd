@@ -3,6 +3,17 @@ from collectors.probe_sources import summarize
 
 
 class ProbeTests(unittest.TestCase):
+    def test_analysis_deduplicates_and_excludes_missing_id(self):
+        result = summarize('jobicy', {'jobs': [
+            {'id': 1, 'jobDescription': 'SQL sql', 'jobGeo': 'Worldwide'},
+            {'id': 1, 'jobDescription': 'Python'},
+            {'jobDescription': 'Python'},
+        ]}, analyze=True)['analysis']
+        self.assertEqual(result['unique_records_analyzed'], 1)
+        self.assertEqual(result['skill_mention_counts']['sql'], 1)
+        self.assertEqual(result['skill_mention_counts']['python'], 0)
+        self.assertEqual(result['location_signal_counts'], {'worldwide_listed_review_required': 1})
+
     def test_rejects_error_response_even_with_jobs(self):
         with self.assertRaises(ValueError):
             summarize('jobicy', {'success': False, 'jobs': []})
