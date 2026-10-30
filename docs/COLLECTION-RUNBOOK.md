@@ -31,3 +31,9 @@ Review source conditions and attribution. Inspect only minimal metadata, retain 
 - https://jobicy.com/jobs-rss-feed
 
 Availability is not rechecked by the current display-metadata collector. Bangladesh eligibility remains unverified. Do not publish these sample counts as market demand.
+
+## Jobicy availability check
+
+    python -m collectors.refresh_snapshot --include-listings --check-availability --output /tmp/career-snapshot.json
+
+Uses one bounded Jobicy batch-status request. Closed records are removed. Active means active at collection time, not guaranteed active when a user clicks. Missing, duplicate, malformed or failed status results remain unknown. Himalayas availability is not rechecked by this option. No database publication occurs automatically. Existing deployed dashboard does not yet display these new status labels.

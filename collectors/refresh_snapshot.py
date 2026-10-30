@@ -34,7 +34,7 @@ def validate_listings(source, listings, maximum):
         if job['source'] != source or job['source_id'] in seen:
             raise ValueError('Mismatched source or duplicate listing')
         seen.add(job['source_id'])
-        if job['availability'] != 'sampled_not_rechecked' or job['location_signal'] not in {'unknown','bangladesh_listed_review_required','worldwide_listed_review_required'}:
+        if job['availability'] not in {'sampled_not_rechecked','active_at_collection','unknown'} or job['location_signal'] not in {'unknown','bangladesh_listed_review_required','worldwide_listed_review_required'}:
             raise ValueError('Unverified listing status')
         url = urlsplit(job['application_url'])
         if url.scheme != 'https' or url.hostname != {'himalayas':'himalayas.app','jobicy':'jobicy.com'}[source] or url.username or url.password or url.port not in (None,443):
@@ -92,13 +92,18 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('--output', required=True)
     parser.add_argument('--include-listings', action='store_true', help='Include validated minimal display metadata')
+    parser.add_argument('--check-availability', action='store_true', help='Check Jobicy status; requires listings')
     args = parser.parse_args()
     try:
         command = [sys.executable, '-m', 'collectors.probe_sources', '--analyze']
         if args.include_listings:
             command.append('--include-listings')
+        if args.check_availability:
+            if not args.include_listings:
+                raise ValueError('Availability checks require listings')
+            command.append('--check-availability')
         result = subprocess.run(command,
-                                capture_output=True, text=True, timeout=65, check=True)
+                                capture_output=True, text=True, timeout=85, check=True)
         snapshot = json.loads(result.stdout)
         save_snapshot(snapshot, args.output)
     except Exception as error:
