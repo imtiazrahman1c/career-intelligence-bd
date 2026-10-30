@@ -24,11 +24,12 @@ export function jobListings(snapshot,source='all',query='',location='all',now=Da
  if(snapshotHealth(snapshot,now).state!=='recent')return [];
  const search=query.trim().toLocaleLowerCase();
  return selectResults(snapshot,source).filter(r=>r.http_status===200&&!r.error_type).flatMap(r=>(Array.isArray(r.listings)?r.listings:[]).filter(j=>{
-  if(j.source!==r.source||typeof j.title!=='string'||typeof j.company!=='string')return false;
+  if(j.source!==r.source||j.availability==='closed'||typeof j.title!=='string'||typeof j.company!=='string')return false;
   try{const u=new URL(j.application_url);if(u.protocol!=='https:'||u.username||u.password||u.port||u.hostname!==({jobicy:'jobicy.com',himalayas:'himalayas.app'})[j.source])return false;}catch{return false;}
   return (!search||(j.title+' '+j.company).toLocaleLowerCase().includes(search))&&(location==='all'||j.location_signal===location);
  }));
 }
+export function availabilityLabel(status){return status==='active_at_collection'?'সংগ্রহের সময় source API-তে active':'Availability নিশ্চিত করা যায়নি';}
 export function analysisTotals(results){
  const good=results.filter(r=>r.http_status===200&&!r.error_type);
  const valid=good.filter(r=>{const a=r.analysis,n=a?.unique_records_analyzed;

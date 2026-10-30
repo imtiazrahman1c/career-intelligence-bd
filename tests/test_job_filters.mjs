@@ -1,5 +1,5 @@
 import assert from 'node:assert/strict';
-import {jobListings} from '../web/model.mjs';
+import {jobListings,availabilityLabel} from '../web/model.mjs';
 const now=Date.parse('2026-10-30T12:00:00Z');
 const job={source:'jobicy',title:'Data Analyst',company:'Example',location_signal:'unknown',application_url:'https://jobicy.com/jobs/example'};
 const snapshot={checked_at:'2026-10-30T11:00:00Z',results:[{source:'jobicy',http_status:200,listings:[job]}]};
@@ -9,4 +9,8 @@ assert.equal(jobListings(snapshot,'all','','worldwide_listed_review_required',no
 assert.equal(jobListings(snapshot,'all','','all',now+86400000).length,0);
 const bad=structuredClone(snapshot);bad.results[0].listings[0].application_url='javascript:alert(1)';
 assert.equal(jobListings(bad,'all','','all',now).length,0);
+const closed=structuredClone(snapshot);closed.results[0].listings[0].availability='closed';
+assert.equal(jobListings(closed,'all','','all',now).length,0);
+assert.match(availabilityLabel('active_at_collection'),/সংগ্রহের সময়/);
+assert.match(availabilityLabel('invalid'),/নিশ্চিত করা যায়নি/);
 console.log('PASS job search, source/location filters, stale data and unsafe URLs');

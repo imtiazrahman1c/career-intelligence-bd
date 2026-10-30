@@ -92,7 +92,7 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('--output', required=True)
     parser.add_argument('--include-listings', action='store_true', help='Include validated minimal display metadata')
-    parser.add_argument('--check-availability', action='store_true', help='Check Jobicy status; requires listings')
+    parser.add_argument('--check-availability', action='store_true', help='Check source status; requires listings')
     args = parser.parse_args()
     try:
         command = [sys.executable, '-m', 'collectors.probe_sources', '--analyze']
@@ -103,7 +103,7 @@ def main():
                 raise ValueError('Availability checks require listings')
             command.append('--check-availability')
         result = subprocess.run(command,
-                                capture_output=True, text=True, timeout=85, check=True)
+                                capture_output=True, text=True, timeout=125, check=True)
         snapshot = json.loads(result.stdout)
         save_snapshot(snapshot, args.output)
     except Exception as error:

@@ -9,7 +9,7 @@ from urllib.request import Request, urlopen
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 from analysis.skills import VERSION, SKILLS, skill_mentions, bangladesh_location_signal
 from collectors.job_records import normalize_jobs
-from collectors.availability import check_jobicy
+from collectors.availability import check_jobicy, check_himalayas
 
 SOURCES = {
     'himalayas': 'https://himalayas.app/jobs/api?limit=20',
@@ -82,7 +82,7 @@ def main():
     parser.add_argument('--source', choices=[*SOURCES, 'all'], default='all')
     parser.add_argument('--analyze', action='store_true', help='Emit aggregate experimental mention counts only')
     parser.add_argument('--include-listings', action='store_true', help='Include minimal attributed display metadata; no descriptions')
-    parser.add_argument('--check-availability', action='store_true', help='Check Jobicy batch status when including listings')
+    parser.add_argument('--check-availability', action='store_true', help='Check source availability when including listings')
     args = parser.parse_args()
     results = []
     for source in SOURCES if args.source == 'all' else [args.source]:
@@ -99,8 +99,9 @@ def main():
                 result = summarize(source, payload, analyze=args.analyze)
                 if args.include_listings:
                     result['listings'] = normalize_jobs(source, payload['jobs'])
-                    if args.check_availability and source == 'jobicy':
-                        result['listings'] = check_jobicy(result['listings'])
+                    if args.check_availability:
+                        checker = check_jobicy if source == 'jobicy' else check_himalayas
+                        result['listings'] = checker(result['listings'])
                 result['http_status'] = response.status
             results.append(result)
         except Exception as error:

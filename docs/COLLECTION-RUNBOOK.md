@@ -36,4 +36,4 @@ Availability is not rechecked by the current display-metadata collector. Banglad
 
     python -m collectors.refresh_snapshot --include-listings --check-availability --output /tmp/career-snapshot.json
 
-Uses one bounded Jobicy batch-status request. Closed records are removed. Active means active at collection time, not guaranteed active when a user clicks. Missing, duplicate, malformed or failed status results remain unknown. Himalayas availability is not rechecked by this option. No database publication occurs automatically. Existing deployed dashboard does not yet display these new status labels.
+Uses one bounded Jobicy batch-status request. Closed records are removed. Active means active at collection time, not guaranteed active when a user clicks. Missing, duplicate, malformed or failed status results remain unknown. Himalayas uses at most 20 individual API checks, with four requests in flight and no retries; HTTP 410 means closed, other failures remain unknown. No database publication occurs automatically. Dashboard labels distinguish active-at-collection from unknown; neither guarantees availability when applying.
