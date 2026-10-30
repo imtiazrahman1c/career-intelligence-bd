@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict';
 import {readFile} from 'node:fs/promises';
 import {selectResults,totals,evidenceRows} from '../web/model.mjs';
-const snapshot=JSON.parse(await readFile(new URL('../web/data/source-probe-summary.json',import.meta.url)));
+const snapshot=JSON.parse(await readFile(new URL('../docs/source-probe-summary.json',import.meta.url)));
 assert.equal(totals(selectResults(snapshot)).records,40);
 assert.equal(totals(selectResults(snapshot,'himalayas')).records,20);
 assert.equal(totals(selectResults(snapshot,'jobicy')).sources,1);
