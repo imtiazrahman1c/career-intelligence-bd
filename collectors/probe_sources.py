@@ -8,6 +8,7 @@ from urllib.request import Request, urlopen
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 from analysis.skills import VERSION, SKILLS, skill_mentions, bangladesh_location_signal
+from collectors.job_records import normalize_jobs
 
 SOURCES = {
     'himalayas': 'https://himalayas.app/jobs/api?limit=20',
@@ -79,6 +80,7 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('--source', choices=[*SOURCES, 'all'], default='all')
     parser.add_argument('--analyze', action='store_true', help='Emit aggregate experimental mention counts only')
+    parser.add_argument('--include-listings', action='store_true', help='Include minimal attributed display metadata; no descriptions')
     args = parser.parse_args()
     results = []
     for source in SOURCES if args.source == 'all' else [args.source]:
@@ -91,7 +93,10 @@ def main():
                 body = response.read(8_000_001)
                 if len(body) > 8_000_000:
                     raise ValueError('Response exceeds probe size limit')
-                result = summarize(source, json.loads(body), analyze=args.analyze)
+                payload = json.loads(body)
+                result = summarize(source, payload, analyze=args.analyze)
+                if args.include_listings:
+                    result['listings'] = normalize_jobs(source, payload['jobs'])
                 result['http_status'] = response.status
             results.append(result)
         except Exception as error:
