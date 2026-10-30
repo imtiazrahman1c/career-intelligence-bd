@@ -8,6 +8,13 @@ export function totals(results){
 }
 export function evidenceRows(results){return ['title','company','description','application','published','countries'].map(field=>({field,count:results.reduce((n,r)=>n+(r.nonempty_field_counts?.[field]||0),0)}));}
 export const skillLabels={sql:'SQL',python:'Python',spreadsheets:'Spreadsheets',power_bi:'Power BI',tableau:'Tableau',seo:'SEO',google_ads:'Google Ads',meta_ads:'Meta Ads',ga4:'GA4',copywriting:'Copywriting',photoshop:'Photoshop',illustrator:'Adobe Illustrator',figma:'Figma',typography:'Typography'};
+export const careerSkills={data_analyst:['sql','python','spreadsheets','power_bi','tableau'],digital_marketer:['seo','google_ads','meta_ads','ga4','copywriting'],graphic_designer:['photoshop','illustrator','figma','typography']};
+export function skillsForCareer(analysis,career='all'){
+ if(!analysis)return [];
+ if(career==='all')return analysis.skills;
+ if(!Object.hasOwn(careerSkills,career))return [];
+ return analysis.skills.filter(skill=>careerSkills[career].includes(skill.id));
+}
 export function analysisTotals(results){
  const good=results.filter(r=>r.http_status===200&&!r.error_type);
  const valid=good.filter(r=>{const a=r.analysis,n=a?.unique_records_analyzed;
