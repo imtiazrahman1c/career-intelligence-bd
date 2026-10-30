@@ -10,7 +10,7 @@ Checkpoint: 2026-10-30. This file records verified completion, not planned work 
 - [x] 06 Dedicated Supabase project created and healthy
 - [x] 07 GitHub repository verified; initial documentation committed
 - [x] 08 Initial limited MVP scope documented; university-specific requirements pending
-- [ ] 09 Live source sample and permission feasibility
+- [ ] 09 Live source sample and permission feasibility — PARTIAL: both 20-record probes passed; indefinite retention unresolved
 - [ ] 10 Runnable application scaffold
 - [ ] 11 Database schema and access controls
 - [ ] 12 Collection, validation and deduplication
@@ -29,4 +29,4 @@ Checkpoint: 2026-10-30. This file records verified completion, not planned work 
 Audience: Bangladesh. Initial three career families: Data Analyst, Digital Marketer and Graphic Designer (working selection). Pilot job-source candidates: Himalayas and Jobicy; taxonomy: O*NET or ESCO after sample inspection. These candidates are not integrated or cleared for all retention uses yet.
 
 ## Next checkpoint
-Inspect real sample fields and reuse/retention conditions; finalize source choice before designing detailed ingestion schema. Implement one source-to-screen flow before expanding.
+Live source field-presence tests completed (20 records/source; both HTTP 200); see docs/SOURCE-FEASIBILITY.md. Next: finalize the current-data retention design and occupation taxonomy, then build the runnable application scaffold and source-to-screen flow. No need for new user credentials for the tested public endpoints.
