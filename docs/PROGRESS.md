@@ -12,7 +12,7 @@ Checkpoint: 2026-10-30. This file records verified completion, not planned work 
 - [x] 08 Initial limited MVP scope documented; university-specific requirements pending
 - [ ] 09 Live source sample and permission feasibility — PARTIAL: both 20-record probes passed; indefinite retention unresolved
 - [ ] 10 Runnable application scaffold — PARTIAL: buildless dashboard code and model tests ready; browser QA and deployment pending
-- [ ] 11 Database schema and access controls — design draft in docs/DATABASE-DESIGN.md; no migration applied
+- [ ] 11 Database schema and access controls — PARTIAL: initial source/probe tables and read-only RLS applied and tested; full job/skill schema pending
 - [ ] 12 Collection, validation and deduplication
 - [ ] 13 Skill/role normalization
 - [ ] 14 Analytics and signal evidence
@@ -30,3 +30,6 @@ Audience: Bangladesh. Initial three career families: Data Analyst, Digital Marke
 
 ## Next checkpoint
 Live source field-presence tests completed (20 records/source; both HTTP 200); see docs/SOURCE-FEASIBILITY.md. Next: finalize the current-data retention design and occupation taxonomy, then build the runnable application scaffold and source-to-screen flow. No need for new user credentials for the tested public endpoints.
+
+## Database checkpoint
+Initial read-only summary database and client loader connected; actual REST test passed (40 sampled observations), unpublished row visibility test passed, public writes denied. See docs/DATABASE-CHECKPOINT.md. Browser QA and deployment remain pending.
