@@ -1,5 +1,7 @@
 name: Collect and publish career snapshot
 on:
+  schedule:
+    - cron: '49 5,17 * * *' # 11:49 and 23:49 Bangladesh time
   workflow_dispatch:
 permissions:
   contents: read
