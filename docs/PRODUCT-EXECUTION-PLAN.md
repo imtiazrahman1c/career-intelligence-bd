@@ -65,3 +65,8 @@ Next implementation: overview category navigation/detail structure; remove appli
 - All 31 Python tests and existing JavaScript checks passed after the content change.
 - Browser visit to prior staging preview reached Vercel login; full visual/mobile/click verification is NOT complete. No protection settings changed.
 - Business growth still needs licensed/source-verified indicators; no growth numbers invented.
+
+## Learning checkpoint — 2026-11-11
+Three reviewed O*NET-related role profiles now render independently of database availability. Official Google Sheets, Google Skillshop and Canva Design School links are attached to separate practical learning paths. Content language, checked dates, cost uncertainty and untested enrolment are disclosed. English communication exercises are editorial.
+35 Python tests and all JS checks including mocked-DOM offline/all-route rendering passed. These do not substitute for browser/mobile QA.
+Remaining launch gaps: larger representative data coverage, permitted deduplicated history before trends, Bangladesh-specific evidence, continued source refresh, protected preview access for browser tests, operational/security review and final owner release review. Working-abroad content remains deferred.
