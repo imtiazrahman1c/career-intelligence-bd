@@ -39,3 +39,8 @@ This is a working pilot with real source data, editorial guidance and explicit l
 - Aggregate export and checksum roundtrip succeeded with the real live payload. Full database restoration remains a separate gate.
 - Added daily aggregate artifact backup (14-day retention). First scheduled backup and six-hour health runs still require observation.
 - Reopened the final preview and verified live skill totals again after the work resumed.
+
+## Source and learner guidance extension
+- Added a reviewed BLS report extract for four occupations (United States, 2025–2035), with source/copyright links, metric, date and geography. Downloaded source table values were checked independently. This is not another live vacancy API and is not merged with the two-provider sample.
+- Added an editorial five-session starter plan on Learning. The learner explicitly chooses one of three topics, phone/computer, and 15/30/60 minutes per session. Time allocation sums to the selected duration. Preferences remain in page memory and are not transmitted/stored. No model call, aptitude score, payment or completion guarantee.
+- This extends the existing device/time adaptation requirement. It does not infer a national personality or choose a career for a student.

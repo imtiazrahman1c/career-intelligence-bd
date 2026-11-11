@@ -1,5 +1,6 @@
 // Editorial refresh is independent from automated market-sample collection.
 export const reviewRegister=[
+ {id:'bls',label:'BLS: যুক্তরাষ্ট্রের পেশার প্রক্ষেপণ',checked:'2026-11-11',intervalDays:90},
  {id:'outlook',label:'WEF: কাজ ও স্কিলের সম্ভাবনা',checked:'2026-11-11',intervalDays:90},
  {id:'business',label:'IEA: জ্বালানি বিনিয়োগ',checked:'2026-11-11',intervalDays:90},
  {id:'skills',label:'O*NET: পেশার পরিচয়',checked:'2026-11-11',intervalDays:90},
