@@ -21,9 +21,23 @@ Commit be3b125e70dc2d949b6209e93149dc7893e2912d includes the cumulative app, HTM
 - Local checks: 35 Python tests and all JavaScript suites passed.
 
 ## Release gates still open
-- Browser verification of the cleanup deployment, mobile viewport, keyboard-only flow and enlarged text.
+- Mobile viewport, complete keyboard-only flow and enlarged text (still not verified).
 - More source coverage and validated skill classification; current samples cannot support market-wide growth claims.
 - Comparable history integration and source reuse/retention review.
 - Backup restoration rehearsal, monitoring and final production release verification.
 
 This is staging QA evidence, not production readiness certification.
+
+## Cleanup deployment follow-up
+
+Deployment dpl_4XTFeJBBGG93ADE6oDE8yarUEoEH was READY and opened in Chrome.
+- Skills source selector: selecting Himalayas showed 20 observations.
+- Returning to Overview showed all 40 source observations, independent of the last detail-page filter.
+- Learning page sample toolbar was not visible, as intended.
+- Removed eligibility panel was absent from the Skills accessibility tree.
+- Learning page heading focus followed by Tab moved to the Google Sheets resource link. This is one focus transition, not a full keyboard audit.
+- DOM computed font for body and AI tools search input was Hind Siliguri, sans-serif.
+- At desktop width 1348 CSS px, document scroll width was also 1348 px on Learning (no document-level horizontal overflow there).
+- Browser device-mode shortcuts did not change the observed viewport. Mobile and enlarged-text results remain unverified; no claim of mobile QA completion.
+
+Next priority: verify a real narrow viewport, then broaden and validate the evidence base before publishing market trend claims.
