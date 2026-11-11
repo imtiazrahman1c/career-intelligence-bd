@@ -4,3 +4,5 @@ input{font:inherit;min-height:36px;padding:6px 10px;border:1px solid #d9e2ef;bor
 
 
 .category-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}.category-grid .panel{display:flex;flex-direction:column}.category-grid .panelbody{display:flex;flex:1;flex-direction:column}.category-grid .linkbutton{margin-top:auto;align-self:flex-start}.note{padding:12px;background:#edf5fb;border-radius:8px;margin:12px 0}@media(max-width:1000px){.category-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}@media(max-width:640px){.category-grid{grid-template-columns:1fr}}
+
+[hidden]{display:none!important}
