@@ -25,3 +25,13 @@
 - Paid providers, AI API budgets, courses and the deferred abroad-preparation module.
 
 The correction-report link removes the earlier email dependency. Owner feedback is still needed to validate whether the actual learners understand and benefit from the product.
+
+## Final deployment verification
+- Preview deployment `dpl_AnDtnMY2T21MsTjdVBXSr6X3Yee4` is READY, built from application state at `7b3cac651a4d12dcebffae693a5c6142ea204806`.
+- HTTP 200 and actual CSP, nosniff, SAMEORIGIN, referrer and permissions headers verified through Vercel fetch.
+- Browser loaded the 120-observation saved snapshot, collected 11 November 2026 at 16:34:24 Bangladesh time.
+- Learning form generated five digital-marketing exercises for phone / 30 minutes, split into 7 learning + 18 practice + 5 review minutes.
+- Responsive harness and external script worked under CSP; 320px outer frame had equal 305px document client/scroll width, with the learning form present. This is CSS reflow testing, not physical-device certification.
+- No application console errors observed; a browser-extension metadata error was unrelated to application source.
+- Latest application checks run `43032651534` succeeded. Previous restore, backup and health runs also succeeded.
+- Deployment remains a development preview; no production launch or paid API activation was performed.
