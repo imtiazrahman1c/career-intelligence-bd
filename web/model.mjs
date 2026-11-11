@@ -33,11 +33,14 @@ export function availabilityLabel(status){return status==='active_at_collection'
 export function analysisTotals(results){
  const good=results.filter(r=>r.http_status===200&&!r.error_type);
  const valid=good.filter(r=>{const a=r.analysis,n=a?.unique_records_analyzed;
-  return a?.method_version==='editorial-mentions-v1'&&Number.isInteger(n)&&n>=0&&n<=r.sample_records&&
+  return ['editorial-mentions-v1','editorial-mentions-v2'].includes(a?.method_version)&&Number.isInteger(n)&&n>=0&&n<=r.sample_records&&
    Object.keys(skillLabels).every(k=>Number.isInteger(a.skill_mention_counts?.[k])&&a.skill_mention_counts[k]>=0&&a.skill_mention_counts[k]<=n)&&
    a.location_signal_counts&&Object.entries(a.location_signal_counts).every(([k,v])=>['unknown','bangladesh_listed_review_required','worldwide_listed_review_required'].includes(k)&&Number.isInteger(v)&&v>=0)&&Object.values(a.location_signal_counts).reduce((s,v)=>s+v,0)===n;
  });
  if(!valid.length)return null;
+ // Never silently combine aggregates produced by different extraction methods.
+ if(new Set(valid.map(r=>r.analysis.method_version)).size!==1)return null;
  const counts=Object.fromEntries(Object.keys(skillLabels).map(k=>[k,valid.reduce((n,r)=>n+r.analysis.skill_mention_counts[k],0)]));
- return {records:valid.reduce((n,r)=>n+r.analysis.unique_records_analyzed,0),sources:valid.length,partial:valid.length!==good.length,skills:Object.entries(counts).map(([id,count])=>({id,label:skillLabels[id],count})).sort((a,b)=>b.count-a.count||a.label.localeCompare(b.label)),locations:Object.fromEntries(['unknown','bangladesh_listed_review_required','worldwide_listed_review_required'].map(k=>[k,valid.reduce((n,r)=>n+(r.analysis.location_signal_counts[k]||0),0)]))};
+ return {methodVersion:valid[0].analysis.method_version,records:valid.reduce((n,r)=>n+r.analysis.unique_records_analyzed,0),sources:valid.length,partial:valid.length!==good.length,skills:Object.entries(counts).map(([id,count])=>({id,label:skillLabels[id],count})).sort((a,b)=>b.count-a.count||a.label.localeCompare(b.label)),locations:Object.fromEntries(['unknown','bangladesh_listed_review_required','worldwide_listed_review_required'].map(k=>[k,valid.reduce((n,r)=>n+(r.analysis.location_signal_counts[k]||0),0)]))};
 }
+
