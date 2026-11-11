@@ -1,5 +1,12 @@
 name: Published data health
 on:
+  push:
+    branches: [main]
+    paths:
+      - .github/workflows/data-health.yml
+      - scripts/data-health.mjs
+      - web/snapshot-client.mjs
+      - web/model.mjs
   schedule:
     - cron: '19 1,7,13,19 * * *'
   workflow_dispatch:

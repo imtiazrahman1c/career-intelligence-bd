@@ -1,5 +1,10 @@
 name: Public aggregate backup
 on:
+  push:
+    branches: [main]
+    paths:
+      - .github/workflows/aggregate-backup.yml
+      - scripts/snapshot-backup.mjs
   schedule:
     - cron: '29 8 * * *'
   workflow_dispatch:
