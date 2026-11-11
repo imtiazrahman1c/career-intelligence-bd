@@ -1,0 +1,30 @@
+name: Public aggregate backup
+on:
+  schedule:
+    - cron: '29 8 * * *'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  backup:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 3
+    steps:
+      - name: Fetch reviewed public source
+        env:
+          REPOSITORY: ${{ github.repository }}
+          REVISION: ${{ github.sha }}
+        run: |
+          git init .
+          git remote add origin "https://github.com/${REPOSITORY}.git"
+          git fetch --depth=1 origin "$REVISION"
+          git checkout --detach FETCH_HEAD
+      - name: Export and verify public aggregate only
+        run: node scripts/snapshot-backup.mjs export "$RUNNER_TEMP/career-aggregate-backup.json"
+      - name: Retain verified aggregate backup
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: career-public-aggregate
+          path: ${{ runner.temp }}/career-aggregate-backup.json
+          retention-days: 14
+          if-no-files-found: error

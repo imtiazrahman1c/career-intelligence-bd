@@ -1,15 +1,20 @@
-# Dashboard development preview
+# Career Intelligence BD dashboard
 
-Run from the repository root:
+Run locally from the repository root:
 
     python -m http.server 8000 --directory web
 
-The buildless dashboard reads the latest published aggregate snapshot from Supabase through read-only public access. Reload re-reads the database; it does not fetch upstream jobs. Never put secret/service-role keys in web/config.mjs.
+The buildless dashboard reads the latest published aggregate sample from Supabase through read-only public access. Refresh re-reads that sample and does not start upstream collection. Never put secret/service-role keys in web/config.mjs.
 
-Staging deployment is READY. See docs/DEPLOYMENT-CHECKPOINT.md for verification and limits. Job search, extraction, automated collection and market trends are not implemented.
+Home has eight topic cards and detail views. Skills use experimental mentions, editorial occupation mappings and exercises. Tools and learning resources are curated. Business/outlook content cites its source and horizon. No application submission or CV collection is provided. Abroad preparation is a deferred module.
 
-Checks:
+Current bounded collection: Himalayas up to 20 records; Jobicy up to 100 records, coverage version bounded-h20-j100-v2. These observations are not total vacancies, national demand or a representative global sample. Different methods or collection limits must not be read as comparable growth.
 
-    node tests/test_dashboard.mjs
-    node tests/test_snapshot_client.mjs
-    python -m unittest discover -s tests -v
+responsive-check.html is a noindex development harness for narrow iframe viewport checks. It is not a physical-device simulator and is not linked in product navigation.
+
+Run checks:
+
+    bash tests/run_checks.sh
+    node scripts/data-health.mjs
+
+For verified status, see docs/EXECUTION-CHECKPOINT-2026-11-11.md and docs/RECOVERY-RUNBOOK.md. READY staging is not a public release or a guarantee of production readiness.

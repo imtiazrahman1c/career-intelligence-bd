@@ -30,3 +30,12 @@ Official pages accessed 11 November 2026:
 
 ## Honest release position
 This is a working pilot with real source data, editorial guidance and explicit limits. It is not the complete original vision, a validated global market model, a forecast engine or a nationally representative career recommendation system. Do not label it 100% complete.
+
+## Follow-up verification
+- Expanded payload published with original collection time 16:34:24 Bangladesh; public read health returned 120 observations, two sources, editorial-mentions-v2.
+- Compatible staging deployment dpl_3CmzQEydq3uwBGm6tjexdUM7c7vU READY. Browser verified 120 combined observations, Jobicy filter 100, and Overview reset to 120.
+- Final build repeated all 21 narrow iframe checks; no document-level horizontal overflow in those cases.
+- Keyboard skip link now focuses main-content without changing the Skills route.
+- Aggregate export and checksum roundtrip succeeded with the real live payload. Full database restoration remains a separate gate.
+- Added daily aggregate artifact backup (14-day retention). First scheduled backup and six-hour health runs still require observation.
+- Reopened the final preview and verified live skill totals again after the work resumed.
