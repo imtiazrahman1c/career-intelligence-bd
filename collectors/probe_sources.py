@@ -13,8 +13,11 @@ from collectors.availability import check_jobicy, check_himalayas
 
 SOURCES = {
     'himalayas': 'https://himalayas.app/jobs/api?limit=20',
-    'jobicy': 'https://jobicy.com/api/jobs?count=20',
+    'jobicy': 'https://jobicy.com/api/jobs?count=100',
 }
+SOURCE_LIMITS = {'himalayas': 20, 'jobicy': 100}
+COVERAGE_VERSION = 'bounded-h20-j100-v2'
+
 FIELDS = {
     'himalayas': {'id': 'guid', 'title': 'title', 'company': 'companyName',
                  'description': 'description', 'application': 'applicationLink',
@@ -107,9 +110,10 @@ def main():
         except Exception as error:
             results.append({'source': source, 'error_type': type(error).__name__, 'ok': False})
     print(json.dumps({'checked_at': datetime.now(timezone.utc).isoformat(),
-                      'results': results}, ensure_ascii=False, indent=2))
+                      'coverage_version': COVERAGE_VERSION, 'results': results}, ensure_ascii=False, indent=2))
     return int(any('error_type' in r for r in results))
 
 
 if __name__ == '__main__':
     raise SystemExit(main())
+

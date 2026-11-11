@@ -68,3 +68,16 @@ class RefreshTests(unittest.TestCase):
         value['checked_at'] = '2000-01-01T00:00:00Z'
         with self.assertRaises(ValueError):
             validate(value)
+
+
+    def test_source_specific_collection_bounds(self):
+        value = fixture()
+        row = next(r for r in value['results'] if r['source'] == 'jobicy')
+        row['sample_records'] = 100
+        with self.assertRaises(ValueError):
+            validate(value)
+        value['coverage_version'] = 'bounded-h20-j100-v2'
+        validate(value)
+        row['sample_records'] = 101
+        with self.assertRaises(ValueError):
+            validate(value)

@@ -12,7 +12,7 @@ export function validateSnapshot(payload){
   seen.add(row.source);
   if(row.http_status!==200||row.error_type)throw new Error('Incomplete source snapshot');
   const n=row.sample_records;
-  if(!count(n,20)||!count(row.duplicate_ids,n)||!fields.every(k=>count(row.nonempty_field_counts?.[k],n)))throw new Error('Invalid snapshot counts');
+  if(!count(n,row.source==='jobicy'&&payload.coverage_version==='bounded-h20-j100-v2'?100:20)||!count(row.duplicate_ids,n)||!fields.every(k=>count(row.nonempty_field_counts?.[k],n)))throw new Error('Invalid snapshot counts');
   if(row.listings!==undefined&&(!Array.isArray(row.listings)||row.listings.length>n||row.listings.some(j=>!j||typeof j!=='object')))throw new Error('Invalid snapshot listings');
  }
  return payload;

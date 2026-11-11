@@ -47,3 +47,5 @@ await vm.runInContext('load()',context);
 assert.match(element('status').textContent,/আগের সংরক্ষিত snapshot/);
 assert.equal((element('content').innerHTML.match(/data-go=/g)||[]).length,8);
 console.log('PASS loaded/stale samples, retained content after refresh failure and navigation focus');
+
+let skipPrevented=false;element('skip-link').click({preventDefault(){skipPrevented=true;}});assert.equal(skipPrevented,true);assert.equal(element('main-content').focused,true);

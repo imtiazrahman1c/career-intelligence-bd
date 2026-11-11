@@ -26,7 +26,7 @@ def public_payload(snapshot):
         if 'listings' in row:
             safe['listings']=row['listings']
         rows.append(safe)
-    return {'checked_at':snapshot['checked_at'],'results':rows}
+    return {'checked_at':snapshot['checked_at'],'coverage_version':snapshot.get('coverage_version','bounded-20-v1'),'results':rows}
 
 
 def publish(snapshot, secret, opener=urlopen):
@@ -64,3 +64,4 @@ def main():
 
 if __name__=='__main__':
     raise SystemExit(main())
+

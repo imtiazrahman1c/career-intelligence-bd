@@ -14,3 +14,8 @@ for(const results of [[null],[row,row],[{...row,http_status:503}],[{...row,sampl
 }
 console.log('PASS malformed snapshots rejected before they reach the dashboard');
 
+
+const larger={...payload,checked_at:new Date().toISOString(),coverage_version:'bounded-h20-j100-v2',results:[{...row,sample_records:100}]};
+assert.equal((await readSnapshot(config,async()=>({ok:true,json:async()=>[{payload:larger}]}))).results[0].sample_records,100);
+await assert.rejects(readSnapshot(config,async()=>({ok:true,json:async()=>[{payload:{...larger,coverage_version:'bounded-20-v1'}}]})),/counts/);
+await assert.rejects(readSnapshot(config,async()=>({ok:true,json:async()=>[{payload:{...larger,results:[{...row,sample_records:101}]}}]})),/counts/);

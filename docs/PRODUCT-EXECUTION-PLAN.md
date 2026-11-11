@@ -1,3 +1,5 @@
+> Historical planning baseline. For the current verified state, see EXECUTION-CHECKPOINT-2026-11-11.md. The old baseline and unchecked items below are not current status.
+
 # Product execution reference
 Updated: 2026-11-09, Asia/Dhaka
 
@@ -57,16 +59,3 @@ Adapt to declared learner constraints; do not infer one national psychology.
 Assistant owns research, design, code, data and tests. User supplies blocked access, paid-service decisions, product review and final release decision.
 Next implementation: overview category navigation/detail structure; remove application framing; correct freshness text. Preserve the collection pipeline.
 
-## Checkpoint — 2026-11-11
-- Category overview and detail routes implemented; Bengali Hind Siliguri retained.
-- Work-market view now shows aggregate evidence instead of a vacancy/application directory.
-- Emerging work and outlook include attributed WEF 2025 Jobs/Skills outlook summaries, checked 2026-11-11. Horizon explicitly 2025–2030, not a new rolling five-year forecast.
-- Editorial practice advice is distinguished from employer expectations.
-- All 31 Python tests and existing JavaScript checks passed after the content change.
-- Browser visit to prior staging preview reached Vercel login; full visual/mobile/click verification is NOT complete. No protection settings changed.
-- Business growth still needs licensed/source-verified indicators; no growth numbers invented.
-
-## Learning checkpoint — 2026-11-11
-Three reviewed O*NET-related role profiles now render independently of database availability. Official Google Sheets, Google Skillshop and Canva Design School links are attached to separate practical learning paths. Content language, checked dates, cost uncertainty and untested enrolment are disclosed. English communication exercises are editorial.
-35 Python tests and all JS checks including mocked-DOM offline/all-route rendering passed. These do not substitute for browser/mobile QA.
-Remaining launch gaps: larger representative data coverage, permitted deduplicated history before trends, Bangladesh-specific evidence, continued source refresh, protected preview access for browser tests, operational/security review and final owner release review. Working-abroad content remains deferred.

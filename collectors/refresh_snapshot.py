@@ -13,7 +13,7 @@ from datetime import datetime, timezone
 from pathlib import Path
 from urllib.parse import urlsplit
 
-from collectors.probe_sources import SOURCES
+from collectors.probe_sources import SOURCES, SOURCE_LIMITS
 from analysis.skills import SKILLS, VERSION
 
 
@@ -47,6 +47,9 @@ def validate(snapshot):
     stamp = datetime.fromisoformat(snapshot.get('checked_at', '').replace('Z', '+00:00'))
     if stamp.tzinfo is None or abs((datetime.now(timezone.utc)-stamp).total_seconds()) > 3600:
         raise ValueError('Collection timestamp outside one-hour validation window')
+    coverage = snapshot.get('coverage_version', 'bounded-20-v1')
+    if coverage not in {'bounded-20-v1', 'bounded-h20-j100-v2'}:
+        raise ValueError('Unknown collection coverage')
     rows = snapshot.get('results')
     if not isinstance(rows, list) or len(rows) != len(SOURCES):
         raise ValueError('Expected all configured sources')
@@ -54,7 +57,7 @@ def validate(snapshot):
         raise ValueError('Missing or duplicated source')
     for row in rows:
         count = row.get('sample_records')
-        if row.get('http_status') != 200 or row.get('error_type') or not integer(count) or count > 20:
+        if row.get('http_status') != 200 or row.get('error_type') or not integer(count) or count > (SOURCE_LIMITS[row['source']] if coverage == 'bounded-h20-j100-v2' else 20):
             raise ValueError('Probe failed or exceeded sample bound')
         analysis = row.get('analysis', {})
         n = analysis.get('unique_records_analyzed')
@@ -116,3 +119,4 @@ def main():
 
 if __name__ == '__main__':
     raise SystemExit(main())
+

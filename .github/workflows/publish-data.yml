@@ -26,8 +26,9 @@ jobs:
       - name: Run offline checks
         run: bash tests/run_checks.sh
       - name: Collect validated current sample
-        run: python3 -m collectors.refresh_snapshot --include-listings --check-availability --output "$RUNNER_TEMP/career-snapshot.json"
+        run: python3 -m collectors.refresh_snapshot --output "$RUNNER_TEMP/career-snapshot.json"
       - name: Publish and verify
         env:
           CAREER_SUPABASE_SECRET_KEY: ${{ secrets.CAREER_SUPABASE_SECRET_KEY }}
         run: python3 -m collectors.publish_snapshot --input "$RUNNER_TEMP/career-snapshot.json"
+
