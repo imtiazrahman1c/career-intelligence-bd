@@ -15,6 +15,22 @@ class SkillsTests(unittest.TestCase):
     def test_no_requirement_inference(self):
         self.assertEqual(skill_mentions('SQL is not required'), ['sql'])
 
+    def test_inline_markup_preserves_words(self):
+        self.assertEqual(skill_mentions('Py<strong>thon</strong> and S<span>QL</span>'), ['python', 'sql'])
+
+    def test_blocks_do_not_join_words(self):
+        self.assertEqual(skill_mentions('<p>Py</p><p>thon</p>'), [])
+
+    def test_hidden_subtree_and_template(self):
+        text = '<div hidden><b>SQL</b><span>Python</span></div><template>Figma</template>SEO'
+        self.assertEqual(skill_mentions(text), ['seo'])
+
+    def test_self_closing_hidden_element(self):
+        self.assertEqual(skill_mentions('<span hidden/>SQL'), ['sql'])
+
+    def test_unicode_compatibility_forms(self):
+        self.assertEqual(skill_mentions('Ｐｙｔｈｏｎ Google\u00a0Ads'), ['google_ads', 'python'])
+
     def test_missing_description(self):
         self.assertEqual(skill_mentions(None), [])
 
@@ -29,3 +45,4 @@ class SkillsTests(unittest.TestCase):
 
 if __name__ == '__main__':
     unittest.main()
+
