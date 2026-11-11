@@ -1,0 +1,14 @@
+import assert from 'node:assert/strict';
+import {readFile} from 'node:fs/promises';
+import {assessDataHealth} from '../scripts/data-health.mjs';
+const snapshot=JSON.parse(await readFile(new URL('../docs/analysis-probe-summary.json',import.meta.url)));
+snapshot.checked_at=new Date().toISOString();
+assert.equal(assessDataHealth(snapshot).ok,true);
+assert.ok(assessDataHealth(snapshot,Date.now()+25*3600000).issues.includes('snapshot_stale'));
+assert.ok(assessDataHealth({...snapshot,results:snapshot.results.slice(0,1)}).issues.includes('missing_source'));
+const mixed=structuredClone(snapshot);mixed.results[0].analysis.method_version='editorial-mentions-v2';
+assert.ok(assessDataHealth(mixed).issues.includes('incomplete_or_incompatible_analysis'));
+const v2=structuredClone(snapshot);v2.results.forEach(row=>row.analysis.method_version='editorial-mentions-v2');
+assert.equal(assessDataHealth(v2).ok,true);
+assert.equal(assessDataHealth(null).ok,false);
+console.log('PASS data health: fresh, stale, missing source, mixed methods, v2 and malformed snapshot');
