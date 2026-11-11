@@ -26,3 +26,6 @@ Export refuses to replace an existing file. Neither operation prints credentials
 
 ## Remote artifact retrieval rehearsal
 Backup workflow run 43023818595 completed successfully and uploaded artifact 13856251375 (career-public-aggregate). Downloaded it via the GitHub connector, verified the ZIP digest against GitHub's artifact metadata, extracted only career-aggregate-backup.json, then ran the backup verifier successfully. The preserved collection timestamp was 2026-11-11T10:34:24.878114+00:00. No write-back, fabricated timestamp or production rollback was performed.
+
+## Disposable PostgreSQL application restore
+GitHub Actions run 43032077488 completed successfully. A PostgreSQL 17.9 service applied the committed application migration, loaded a verified real public aggregate plus synthetic visibility fixtures, dumped the application database, restored it into a second empty database, and passed row visibility, RLS and read-only grant assertions there. No live database connection or Supabase server secret was used. This verifies the application schema/aggregate recovery process; it does not restore Supabase Auth, private schemas, storage or provider configuration.

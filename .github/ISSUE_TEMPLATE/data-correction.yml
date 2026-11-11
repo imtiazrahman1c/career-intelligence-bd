@@ -1,0 +1,29 @@
+name: তথ্য সংশোধন বা ব্যবহারগত সমস্যা
+description: ভুল তথ্য, অচল লিংক বা পেজ ব্যবহারের সমস্যা জানান।
+title: '[সংশোধন] '
+body:
+  - type: markdown
+    attributes:
+      value: 'এটি পাবলিক রিপোর্ট। নাম, ফোন, ইমেইল, পাসওয়ার্ড, CV বা ব্যক্তিগত তথ্য লিখবেন না।'
+  - type: input
+    id: page
+    attributes:
+      label: কোন পেজ বা বিষয়?
+      placeholder: স্কিল / শেখার পথ / নতুন ক্ষেত্র
+    validations:
+      required: true
+  - type: textarea
+    id: observed
+    attributes:
+      label: কী সমস্যা দেখেছেন?
+      description: কোন তথ্য বা আচরণটি ভুল মনে হয়েছে তা লিখুন।
+    validations:
+      required: true
+  - type: input
+    id: source
+    attributes:
+      label: সংশোধনের নির্ভরযোগ্য উৎসের লিংক (থাকলে)
+  - type: textarea
+    id: expected
+    attributes:
+      label: কী পরিবর্তন দরকার বলে মনে হয়?
