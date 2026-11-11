@@ -6,6 +6,7 @@ const count=(value,max)=>Number.isSafeInteger(value)&&value>=0&&value<=max;
 
 export function validateSnapshot(payload){
  if(snapshotHealth(payload).state==='invalid'||!Array.isArray(payload?.results)||!payload.results.length)throw new Error('Invalid snapshot');
+ if(!['bounded-20-v1','bounded-h20-j100-v2'].includes(payload.coverage_version??'bounded-20-v1'))throw new Error('Unknown snapshot coverage');
  const seen=new Set();
  for(const row of payload.results){
   if(!sources.has(row?.source)||seen.has(row.source))throw new Error('Invalid snapshot source');
@@ -19,8 +20,8 @@ export function validateSnapshot(payload){
 }
 
 export async function readSnapshot(config, fetchImpl=fetch) {
- if(!config.url.startsWith('https://')||!config.publishableKey.startsWith('sb_publishable_'))throw new Error('Invalid public configuration');
- const url=config.url+'/rest/v1/dashboard_snapshots?select=payload&is_published=eq.true&order=checked_at.desc&limit=1';
+ let origin;try{const parsed=new URL(config?.url);if(parsed.protocol!=='https:'||parsed.username||parsed.password||parsed.port||parsed.pathname!=='/'||parsed.search||parsed.hash||!parsed.hostname.endsWith('.supabase.co')||typeof config.publishableKey!=='string'||!config.publishableKey.startsWith('sb_publishable_'))throw Error();origin=parsed.origin;}catch{throw new Error('Invalid public configuration');}
+ const url=origin+'/rest/v1/dashboard_snapshots?select=payload&is_published=eq.true&order=checked_at.desc&limit=1';
  const response=await fetchImpl(url,{headers:{apikey:config.publishableKey},cache:'no-store',signal:AbortSignal.timeout(12000)});
  if(!response.ok)throw new Error('Database HTTP '+response.status);
  const rows=await response.json();

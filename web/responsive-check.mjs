@@ -1,0 +1,1 @@
+const frame=document.getElementById('preview');document.getElementById('sizes').addEventListener('click',e=>{if(e.target.dataset.width)frame.style.width=e.target.dataset.width+'px'});document.getElementById('view').addEventListener('change',e=>frame.src='index.html#'+e.target.value);

@@ -2,19 +2,25 @@ import {createHash} from 'node:crypto';
 import {writeFile,readFile} from 'node:fs/promises';
 import {pathToFileURL} from 'node:url';
 import {databaseConfig} from '../web/config.mjs';
+import {analysisTotals,skillLabels} from '../web/model.mjs';
 import {readSnapshot,validateSnapshot} from '../web/snapshot-client.mjs';
 const digest=text=>createHash('sha256').update(text).digest('hex');
 export function encodeBackup(snapshot){
  validateSnapshot(snapshot);
+ const analysis=analysisTotals(snapshot.results);
+ if(!analysis||analysis.partial)throw Error('Incomplete backup analysis');
  // Explicit aggregate projection: no raw listing metadata or descriptions.
- const payload={checked_at:snapshot.checked_at,coverage_version:snapshot.coverage_version??'bounded-20-v1',results:snapshot.results.map(row=>({source:row.source,http_status:row.http_status,sample_records:row.sample_records,duplicate_ids:row.duplicate_ids,nonempty_field_counts:row.nonempty_field_counts,analysis:row.analysis}))};
+ const payload={checked_at:snapshot.checked_at,coverage_version:snapshot.coverage_version??'bounded-20-v1',results:snapshot.results.map(row=>({source:row.source,http_status:row.http_status,sample_records:row.sample_records,duplicate_ids:row.duplicate_ids,nonempty_field_counts:Object.fromEntries(['id','title','company','description','application','published','countries'].map(key=>[key,row.nonempty_field_counts[key]??0])),analysis:Object.fromEntries(['method_version','unique_records_analyzed','skill_mention_counts','location_signal_counts'].map(key=>[key,key==='skill_mention_counts'?Object.fromEntries(Object.keys(skillLabels).map(id=>[id,row.analysis.skill_mention_counts[id]])):row.analysis[key]]))}))};
  const text=JSON.stringify(payload);
  return JSON.stringify({format:'career-public-aggregate-v1',exported_at:new Date().toISOString(),sha256:digest(text),payload:text},null,2);
 }
 export function decodeBackup(text){
  const envelope=JSON.parse(text);
  if(envelope.format!=='career-public-aggregate-v1'||typeof envelope.payload!=='string'||digest(envelope.payload)!==envelope.sha256)throw Error('Invalid backup integrity');
- return validateSnapshot(JSON.parse(envelope.payload));
+ const restored=validateSnapshot(JSON.parse(envelope.payload));
+ const analysis=analysisTotals(restored.results);
+ if(!analysis||analysis.partial)throw Error('Incomplete backup analysis');
+ return restored;
 }
 if(process.argv[1]&&import.meta.url===pathToFileURL(process.argv[1]).href){
  try{

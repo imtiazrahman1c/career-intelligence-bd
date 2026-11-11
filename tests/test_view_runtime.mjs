@@ -58,3 +58,10 @@ element('tabs').click({target:{closest:()=>({dataset:{tab:'learning'}})}});
 element('learning-career').value='digital_marketer';element('learning-device').value='phone';element('learning-minutes').value='30';
 element('content').submit({target:{id:'learning-plan'},preventDefault(){}});
 assert.match(element('content').innerHTML,/প্রথম পাঁচটি অনুশীলন/);assert.equal(element('starter-plan').focused,true);
+
+const unchanged=element('content').innerHTML;
+context.readSnapshot=async()=>sample;
+await vm.runInContext('load()',context);
+assert.equal(element('content').innerHTML,unchanged,'editorial form must not be rerendered by a background sample refresh');
+element('tabs').click({target:{closest:()=>({dataset:{tab:'overview'}})}});
+assert.match(element('freshness').textContent,/অসম্পূর্ণ/);

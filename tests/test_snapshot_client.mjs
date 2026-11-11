@@ -19,3 +19,9 @@ const larger={...payload,checked_at:new Date().toISOString(),coverage_version:'b
 assert.equal((await readSnapshot(config,async()=>({ok:true,json:async()=>[{payload:larger}]}))).results[0].sample_records,100);
 await assert.rejects(readSnapshot(config,async()=>({ok:true,json:async()=>[{payload:{...larger,coverage_version:'bounded-20-v1'}}]})),/counts/);
 await assert.rejects(readSnapshot(config,async()=>({ok:true,json:async()=>[{payload:{...larger,results:[{...row,sample_records:101}]}}]})),/counts/);
+
+for(const url of ['https://example.com','https://example.supabase.co@evil.example','https://example.supabase.co/path','https://example.supabase.co?x=1',null]){
+ let fetched=false;await assert.rejects(readSnapshot({...config,url},async()=>{fetched=true;}),/configuration/);assert.equal(fetched,false);
+}
+await assert.rejects(readSnapshot(config,async()=>({ok:true,json:async()=>[{payload:{...payload,coverage_version:'unreviewed-v999'}}]})),/coverage/);
+console.log('PASS configuration refuses unexpected hosts, URL credentials and unknown coverage');

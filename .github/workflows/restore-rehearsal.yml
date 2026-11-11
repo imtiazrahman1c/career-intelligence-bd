@@ -1,0 +1,41 @@
+name: Application database restore rehearsal
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/restore-rehearsal.yml'
+      - 'scripts/restore-*'
+      - 'scripts/snapshot-backup.mjs'
+      - 'supabase/migrations/**'
+      - 'tests/database/**'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  restore:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 8
+    services:
+      postgres:
+        image: postgres:17.9
+        env:
+          POSTGRES_PASSWORD: ephemeral-test-only
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+    steps:
+      - name: Fetch reviewed repository source
+        env:
+          REPOSITORY: ${{ github.repository }}
+          REVISION: ${{ github.sha }}
+        run: |
+          git init .
+          git remote add origin "https://github.com/${REPOSITORY}.git"
+          git fetch --depth=1 origin "$REVISION"
+          git checkout --detach FETCH_HEAD
+      - name: Restore and verify application schema with public aggregate
+        env:
+          POSTGRES_CONTAINER: ${{ job.services.postgres.id }}
+        run: bash scripts/restore-rehearsal.sh
