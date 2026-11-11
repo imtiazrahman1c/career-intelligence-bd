@@ -56,3 +56,12 @@ Adapt to declared learner constraints; do not infer one national psychology.
 
 Assistant owns research, design, code, data and tests. User supplies blocked access, paid-service decisions, product review and final release decision.
 Next implementation: overview category navigation/detail structure; remove application framing; correct freshness text. Preserve the collection pipeline.
+
+## Checkpoint — 2026-11-11
+- Category overview and detail routes implemented; Bengali Hind Siliguri retained.
+- Work-market view now shows aggregate evidence instead of a vacancy/application directory.
+- Emerging work and outlook include attributed WEF 2025 Jobs/Skills outlook summaries, checked 2026-11-11. Horizon explicitly 2025–2030, not a new rolling five-year forecast.
+- Editorial practice advice is distinguished from employer expectations.
+- All 31 Python tests and existing JavaScript checks passed after the content change.
+- Browser visit to prior staging preview reached Vercel login; full visual/mobile/click verification is NOT complete. No protection settings changed.
+- Business growth still needs licensed/source-verified indicators; no growth numbers invented.
