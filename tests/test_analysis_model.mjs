@@ -26,3 +26,18 @@ assert.deepEqual(skillsForCareer(all,'invalid'),[]);
 assert.deepEqual(skillsForCareer(null),[]);
 assert.equal(all.records,40);
 console.log('PASS career vocabulary filters, zero counts and unchanged denominator');
+
+
+const v2=structuredClone(snapshot.results);
+for(const row of v2)row.analysis.method_version='editorial-mentions-v2';
+assert.equal(analysisTotals(v2).records,40);
+assert.equal(analysisTotals(v2).methodVersion,'editorial-mentions-v2');
+const mixed=structuredClone(v2);
+mixed[0].analysis.method_version='editorial-mentions-v1';
+assert.equal(analysisTotals(mixed),null);
+assert.equal(analysisTotals([mixed[0]]).methodVersion,'editorial-mentions-v1');
+assert.equal(analysisTotals([mixed[1]]).methodVersion,'editorial-mentions-v2');
+const future=structuredClone(v2);
+for(const row of future)row.analysis.method_version='editorial-mentions-v999';
+assert.equal(analysisTotals(future),null);
+console.log('PASS v2 aggregates, mixed-method refusal, source isolation and unknown versions');
