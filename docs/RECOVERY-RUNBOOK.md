@@ -23,3 +23,6 @@ Export refuses to replace an existing file. Neither operation prints credentials
 - Parsed it again, verified its checksum and validated the restored payload locally.
 - Regression tests reject corrupt envelopes and preserve analysis values.
 - No destructive database rollback or full Postgres restore was performed.
+
+## Remote artifact retrieval rehearsal
+Backup workflow run 43023818595 completed successfully and uploaded artifact 13856251375 (career-public-aggregate). Downloaded it via the GitHub connector, verified the ZIP digest against GitHub's artifact metadata, extracted only career-aggregate-backup.json, then ran the backup verifier successfully. The preserved collection timestamp was 2026-11-11T10:34:24.878114+00:00. No write-back, fabricated timestamp or production rollback was performed.

@@ -44,3 +44,12 @@ This is a working pilot with real source data, editorial guidance and explicit l
 - Added a reviewed BLS report extract for four occupations (United States, 2025–2035), with source/copyright links, metric, date and geography. Downloaded source table values were checked independently. This is not another live vacancy API and is not merged with the two-provider sample.
 - Added an editorial five-session starter plan on Learning. The learner explicitly chooses one of three topics, phone/computer, and 15/30/60 minutes per session. Time allocation sums to the selected duration. Preferences remain in page memory and are not transmitted/stored. No model call, aptitude score, payment or completion guarantee.
 - This extends the existing device/time adaptation requirement. It does not infer a national personality or choose a career for a student.
+
+## Operational and extension verification
+- Staging dpl_7cJuJM6Xu2F5Q7RZewJDvQB6iAMW READY: BLS examples and the generated learning plan verified in Chrome.
+- Chose Digital Marketing / phone / 30 minutes: output contained five exercises and 7+18+5 minute allocation. Form output and BLS table rendered at iframe widths 320, 375 and 768 without document-level horizontal overflow (six additional checks).
+- Source review due dates include BLS. No paid API/model is activated.
+- GitHub Application checks run 43023403417 succeeded for feature commit dddde21a5344efa4c17d2e3a75fb9431d9126818.
+- Health run 43023818612 and backup run 43023818595 succeeded for ops commit 7d34c2133039631e8451a2c66040b0e4a565093d, both triggered by push. This verifies execution but does not claim a scheduled run occurred.
+- Backup artifact 13856251375 exists, unexpired, expires 25 November 2026. Downloaded the actual uploaded ZIP, checked its GitHub-reported SHA-256 digest, extracted only the expected aggregate JSON, and passed decode/checksum/schema verification locally. This is a verified remote aggregate recovery path, not a full Postgres restore.
+- Snapshot public read health passed: two sources, 120 analyzed observations, editorial-mentions-v2. Existing source coverage and historical comparability limitations still apply.
