@@ -1,0 +1,23 @@
+name: Published data health
+on:
+  schedule:
+    - cron: '19 1,7,13,19 * * *'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  health:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 3
+    steps:
+      - name: Fetch public repository at event commit
+        env:
+          REPOSITORY: ${{ github.repository }}
+          REVISION: ${{ github.sha }}
+        run: |
+          git init .
+          git remote add origin "https://github.com/${REPOSITORY}.git"
+          git fetch --depth=1 origin "$REVISION"
+          git checkout --detach FETCH_HEAD
+      - name: Verify published sample freshness and coverage
+        run: node scripts/data-health.mjs
