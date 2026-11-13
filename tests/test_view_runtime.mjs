@@ -1,3 +1,4 @@
+import {renderDigitalPaths,renderAITools,renderDigitalBusiness} from '../web/digital-intelligence.mjs';
 import {renderDashboard} from '../web/dashboard.mjs';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
@@ -14,11 +15,11 @@ import * as tools from '../web/tools.mjs';
 const elements=new Map();
 const element=id=>{if(!elements.has(id))elements.set(id,{value:id==='source'?'all':'',textContent:'',innerHTML:'',className:'',focus(){this.focused=true;},addEventListener(type,fn){this[type]=fn;},setAttribute(){},removeAttribute(){}});return elements.get(id);};
 const nav=navigation.views.map(id=>({dataset:{tab:id},textContent:id,setAttribute(){},removeAttribute(){}}));
-const context={renderDashboard,makeStarterPlan,occupationProjection,...review,...model,...navigation,...profiles,...learning,...watch,...tools, databaseConfig:{},readSnapshot:async()=>{throw Error('simulated offline');},document:{getElementById:element,querySelector:selector=>nav.find(n=>selector.includes('"'+n.dataset.tab+'"')),querySelectorAll:()=>nav},window:{localStorage:{getItem:()=>null},addEventListener(){}},location:{hash:''},history:{pushState(){}},console};
+const context={renderDigitalPaths,renderAITools,renderDigitalBusiness,renderDashboard,makeStarterPlan,occupationProjection,...review,...model,...navigation,...profiles,...learning,...watch,...tools, databaseConfig:{},readSnapshot:async()=>{throw Error('simulated offline');},document:{getElementById:element,querySelector:selector=>nav.find(n=>selector.includes('"'+n.dataset.tab+'"')),querySelectorAll:()=>nav},window:{localStorage:{getItem:()=>null},addEventListener(){}},location:{hash:''},history:{pushState(){}},console};
 vm.createContext(context);
 vm.runInContext(fs.readFileSync('web/app.js','utf8').replace(/^import .*;\n/gm,''),context);
 assert.ok((element('content').innerHTML.match(/data-go=/g)||[]).length>=8);
-assert.match(element('content').innerHTML,/Emerging Careers/);
+assert.match(element('content').innerHTML,/Digital Career Map/);
 for(const id of navigation.views){element('tabs').click({target:{closest:()=>({dataset:{tab:id}})}});assert.ok(element('content').innerHTML.length>0,id);}
 element('tabs').click({target:{closest:()=>({dataset:{tab:'skills'}})}});
 assert.match(element('content').innerHTML,/15-2051.01/);
@@ -50,12 +51,12 @@ context.readSnapshot=async()=>{throw Error('simulated refresh failure');};
 await vm.runInContext('load()',context);
 assert.match(element('status').textContent,/আগের সংরক্ষিত snapshot/);
 assert.ok((element('content').innerHTML.match(/data-go=/g)||[]).length>=8);
-assert.match(element('content').innerHTML,/Emerging Careers/);
+assert.match(element('content').innerHTML,/Digital Career Map/);
 console.log('PASS loaded/stale samples, retained content after refresh failure and navigation focus');
 
 let skipPrevented=false;element('skip-link').click({preventDefault(){skipPrevented=true;}});assert.equal(skipPrevented,true);assert.equal(element('main-content').focused,true);
 
-element('tabs').click({target:{closest:()=>({dataset:{tab:'emerging'}})}});assert.match(element('content').innerHTML,/২০২৫–২০৩৫/);assert.match(element('content').innerHTML,/34.6%/);assert.match(element('content').innerHTML,/বাংলাদেশের পূর্বাভাস/);
+element('tabs').click({target:{closest:()=>({dataset:{tab:'emerging'}})}});assert.match(element('content').innerHTML,/12 pathways/);assert.match(element('content').innerHTML,/AI Automation/);
 
 element('tabs').click({target:{closest:()=>({dataset:{tab:'learning'}})}});
 element('learning-career').value='digital_marketer';element('learning-device').value='phone';element('learning-minutes').value='30';
